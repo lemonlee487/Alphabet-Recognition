@@ -202,31 +202,21 @@ class Window(QMainWindow):
             print("Please enter numbers only, not text!!")
 
     def generateAlphbetTDS(self):
-        print("Generating A Training Data Set")
         algorithm.create_training_data_set(variable.image_A, variable.Train_data_set_A)
-        print("Generating B Training Data Set")
         algorithm.create_training_data_set(variable.image_B, variable.Train_data_set_B)
-        print("Generating C Training Data Set")
         algorithm.create_training_data_set(variable.image_C, variable.Train_data_set_C)
-        print("Generating D Training Data Set")
         algorithm.create_training_data_set(variable.image_D, variable.Train_data_set_D)
-        print("Generating E Training Data Set")
         algorithm.create_training_data_set(variable.image_E, variable.Train_data_set_E)
-        print("Generating F Training Data Set")
         algorithm.create_training_data_set(variable.image_F, variable.Train_data_set_F)
-        print("Generating G Training Data Set")
         algorithm.create_training_data_set(variable.image_G, variable.Train_data_set_G)
 
         print("Done generate %d images for each alphabet" % variable.NUM_IMAGE_IN_DATA_SET)
-        print("%d, %d, %d, %d, %d, %d, %d" % (len(variable.Train_data_set_A), len(variable.Train_data_set_B)
-                                              , len(variable.Train_data_set_C), len(variable.Train_data_set_D)
-                                              , len(variable.Train_data_set_E), len(variable.Train_data_set_F)
-                                              , len(variable.Train_data_set_G)))
         self.instruction.setText("Done generate %d images for each alphabet" % variable.NUM_IMAGE_IN_DATA_SET)
         self.trainbtn.setDisabled(False)
 
     def trainNN(self):
         print("Start Training")
+        self.instruction.setText("Start Training, process could take very long")
         self.lrbtn.setDisabled(True)
         self.nebtn.setDisabled(True)
         self.h1btn.setDisabled(True)
@@ -237,16 +227,21 @@ class Window(QMainWindow):
         algorithm.init_weight()
 
         for i in range(variable.NUM_EPOCHS):
+            print(i)
             for j in range(variable.NUM_IMAGE_IN_DATA_SET):
                 algorithm.training_nn(0, variable.Train_data_set_A, j)
                 algorithm.training_nn(1, variable.Train_data_set_B, j)
-                algorithm.training_nn(2, variable.Train_data_set_C, j)
-                algorithm.training_nn(3, variable.Train_data_set_D, j)
-                algorithm.training_nn(4, variable.Train_data_set_E, j)
-                algorithm.training_nn(5, variable.Train_data_set_F, j)
-                algorithm.training_nn(6, variable.Train_data_set_G, j)
+#                algorithm.training_nn(2, variable.Train_data_set_C, j)
+#                algorithm.training_nn(3, variable.Train_data_set_D, j)
+#                algorithm.training_nn(4, variable.Train_data_set_E, j)
+#                algorithm.training_nn(5, variable.Train_data_set_F, j)
+#                algorithm.training_nn(6, variable.Train_data_set_G, j)
 
         print("Training Complete")
+        print(variable.Weight_input_hidden1)
+        print(variable.Weight_hidden1_hidden2)
+        print(variable.Weight_hidden2_output)
+        self.instruction.setText("Training Complete")
 
         self.lrbtn.setDisabled(False)
         self.nebtn.setDisabled(False)
@@ -254,12 +249,12 @@ class Window(QMainWindow):
         self.h2btn.setDisabled(False)
         self.thbtn.setDisabled(False)
         self.tdsbtn.setDisabled(False)
+        self.genalphabetbtn.setDisabled(False)
 
     def genAlphabetForTesting(self):
         alphabet = self.comboxBox.currentText()
 
         if alphabet.__eq__('A'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_A, variable.RATE)
 
             for i in range(10):
@@ -270,10 +265,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('B'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_B, variable.RATE)
 
             for i in range(10):
@@ -284,10 +278,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('C'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_C, variable.RATE)
 
             for i in range(10):
@@ -298,10 +291,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('D'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_D, variable.RATE)
 
             for i in range(10):
@@ -312,10 +304,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('E'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_E, variable.RATE)
 
             for i in range(10):
@@ -326,10 +317,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('F'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_F, variable.RATE)
 
             for i in range(10):
@@ -340,10 +330,9 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
+
         elif alphabet.__eq__('G'):
-            print(alphabet)
             image = algorithm.scramble(variable.image_G, variable.RATE)
 
             for i in range(10):
@@ -354,7 +343,6 @@ class Window(QMainWindow):
                     self.table.setItem(i, j, item)
                     if value == 1:
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
-            print("done")
             self.showNN(image)
 
     def showNN(self, image):
@@ -362,7 +350,7 @@ class Window(QMainWindow):
         algorithm.o_hidden1()
         algorithm.o_hidden2()
         algorithm.o_output()
-        print(variable.Output_output)
+        #print(variable.Output_output)
         self.outputtextbox.setText("The outputs are \n=> %f\n=> %f\n=> %f\n=> %f\n=> %f\n=> %f" %
                                    (variable.Output_output[0], variable.Output_output[1], variable.Output_output[2],
                                    variable.Output_output[3], variable.Output_output[4], variable.Output_output[5]))
