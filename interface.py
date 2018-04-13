@@ -113,6 +113,9 @@ class Window(QMainWindow):
         self.comboxBox.addItem("E")
         self.comboxBox.addItem("F")
         self.comboxBox.addItem("G")
+        self.comboxBox.addItem("H")
+        self.comboxBox.addItem("I")
+        self.comboxBox.addItem("J")
         self.comboxBox.move(300, 5)
 
         self.genalphabetbtn = QPushButton("Generate image & Recognize using NN", self)
@@ -138,7 +141,7 @@ class Window(QMainWindow):
 
         self.outputtextbox = QTextEdit(self)
         self.outputtextbox.move(300, 320)
-        self.outputtextbox.resize(220, 110)
+        self.outputtextbox.resize(250, 150)
         self.outputtextbox.setDisabled(True)
         self.outputtextbox.setText("Output Value???")
 
@@ -231,11 +234,11 @@ class Window(QMainWindow):
             for j in range(variable.NUM_IMAGE_IN_DATA_SET):
                 algorithm.training_nn(0, variable.Train_data_set_A, j)
                 algorithm.training_nn(1, variable.Train_data_set_B, j)
-#                algorithm.training_nn(2, variable.Train_data_set_C, j)
-#                algorithm.training_nn(3, variable.Train_data_set_D, j)
-#                algorithm.training_nn(4, variable.Train_data_set_E, j)
-#                algorithm.training_nn(5, variable.Train_data_set_F, j)
-#                algorithm.training_nn(6, variable.Train_data_set_G, j)
+                algorithm.training_nn(2, variable.Train_data_set_C, j)
+                algorithm.training_nn(3, variable.Train_data_set_D, j)
+                algorithm.training_nn(4, variable.Train_data_set_E, j)
+                algorithm.training_nn(5, variable.Train_data_set_F, j)
+                algorithm.training_nn(6, variable.Train_data_set_G, j)
 
         print("Training Complete")
         print(variable.Weight_input_hidden1)
@@ -345,15 +348,88 @@ class Window(QMainWindow):
                         self.table.item(i, j).setBackground(QColor(0, 0, 0))
             self.showNN(image)
 
+        elif alphabet.__eq__('H'):
+            image = algorithm.scramble(variable.image_H, variable.RATE)
+
+            for i in range(10):
+                for j in range(8):
+                    value = image[i][j]
+                    item = QTableWidgetItem()
+                    item.setData(Qt.DisplayRole, "")
+                    self.table.setItem(i, j, item)
+                    if value == 1:
+                        self.table.item(i, j).setBackground(QColor(0, 0, 0))
+            self.showNN(image)
+
+        elif alphabet.__eq__('I'):
+            image = algorithm.scramble(variable.image_I, variable.RATE)
+
+            for i in range(10):
+                for j in range(8):
+                    value = image[i][j]
+                    item = QTableWidgetItem()
+                    item.setData(Qt.DisplayRole, "")
+                    self.table.setItem(i, j, item)
+                    if value == 1:
+                        self.table.item(i, j).setBackground(QColor(0, 0, 0))
+            self.showNN(image)
+
+        elif alphabet.__eq__('J'):
+            image = algorithm.scramble(variable.image_J, variable.RATE)
+
+            for i in range(10):
+                for j in range(8):
+                    value = image[i][j]
+                    item = QTableWidgetItem()
+                    item.setData(Qt.DisplayRole, "")
+                    self.table.setItem(i, j, item)
+                    if value == 1:
+                        self.table.item(i, j).setBackground(QColor(0, 0, 0))
+            self.showNN(image)
+
     def showNN(self, image):
         algorithm.o_input(image)
         algorithm.o_hidden1()
         algorithm.o_hidden2()
         algorithm.o_output()
-        #print(variable.Output_output)
         self.outputtextbox.setText("The outputs are \n=> %f\n=> %f\n=> %f\n=> %f\n=> %f\n=> %f" %
                                    (variable.Output_output[0], variable.Output_output[1], variable.Output_output[2],
                                    variable.Output_output[3], variable.Output_output[4], variable.Output_output[5]))
+        self.outputtextbox.append(self.recog_alpha(variable.Output_output))
+
+    def recog_alpha(self, output):
+        result = []
+        reco = ""
+        for item in output:
+            if(item > 0.99):
+                result.append(1)
+            else:
+                result.append(0)
+
+        reco = ""
+        for i in range(len(variable.expect_output)):
+            if variable.expect_output[i] == result:
+                if i == 0:
+                    reco = "This image is A"
+                elif i == 1:
+                    reco = "This image is B"
+                elif i == 2:
+                    reco = "This image is C"
+                elif i == 3:
+                    reco = "This image is D"
+                elif i == 4:
+                    reco = "This image is E"
+                elif i == 5:
+                    reco = "This image is F"
+                elif i == 6:
+                    reco = "This image is G"
+
+        if reco.__eq__(""):
+            return "Cannot recognize this image: This image is not between A - G"
+        else:
+            return reco
+
+
 
 
 app = QApplication(sys.argv)

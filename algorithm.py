@@ -82,7 +82,7 @@ def o_hidden1():
             sum_output += variable.Output_input[j] * variable.Weight_input_hidden1[j][i]
 
         sum_output -= variable.THRESHOLD
-        activation = hyperbolic_tangent(sum_output)
+        activation = sigmod(sum_output)
         variable.Output_hidden_1.insert(i, activation)
 
 
@@ -94,7 +94,7 @@ def o_hidden2():
             sum_output += variable.Output_hidden_1[j] * variable.Weight_hidden1_hidden2[j][i]
 
         sum_output -= variable.THRESHOLD
-        activation = hyperbolic_tangent(sum_output)
+        activation = sigmod(sum_output)
         variable.Output_hidden_2.insert(i, activation)
 
 
@@ -106,7 +106,7 @@ def o_output():
             sum_output += variable.Output_hidden_2[j] * variable.Weight_hidden2_output[j][i]
 
         sum_output -= variable.THRESHOLD
-        activation = hyperbolic_tangent(sum_output)
+        activation = sigmod(sum_output)
         variable.Output_output.insert(i, activation)
 
 
@@ -285,11 +285,4 @@ def main():
     print(variable.Output_output)
 
 
-def main2():
-    number = -0.9668216226
-    print(sigmod(number))
-
-
-
-main()
-#main2()
+#main()
